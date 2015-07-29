@@ -12,6 +12,8 @@ public class ChessGame {
 	public ChessGame() {
 		white_player = new Player(isWhite);
 		black_player = new Player(!isWhite);
+		white_player.addOtherPlayerPieces(black_player.pieces);
+		black_player.addOtherPlayerPieces(white_player.pieces);
 	}
 
 	public void readFile(String fileName) throws IOException {

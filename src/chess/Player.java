@@ -5,9 +5,10 @@ import java.util.List;
 
 public class Player {
 	ArrayList <Piece> pieces;
+	ArrayList <Piece> otherPlayerPieces;
     boolean isWhite;
     boolean won;
-
+    
 	public Player(boolean isWhite) {
         this.isWhite = isWhite;
 		pieces = new ArrayList<Piece> ();
@@ -25,6 +26,12 @@ public class Player {
 		pieces.add(new Piece(ChessConstants.KING, (char)('a'+ 4), offset*7 + 1, isWhite));
 		pieces.add(new Piece(ChessConstants.QUEEN, (char)('a'+ 3), offset*7 + 1, isWhite));
 	}
+	
+
+    public void addOtherPlayerPieces(ArrayList<Piece> opp) {
+    	this.otherPlayerPieces = opp;
+    }
+
 	
 	private void castle (String move) {
 		if ("O-O".equals(move.toUpperCase())){
@@ -97,15 +104,17 @@ public class Player {
 			return;
 		}
 
-        if(solveAmbiguity(move)){
-            return;
-        }
-
         //handling promotion moves
         if (move.contains("=")){
             promote(move);
             return;
         }
+        
+        if(solveAmbiguity(move)){
+            return;
+        }
+
+       
         
 		String position = move.substring(move.length()-2);
 		Character x = position.charAt(0);
@@ -186,8 +195,8 @@ public class Player {
         String[] promote_pieces = move.split("=");
         String oldPiece = promote_pieces[0].charAt(0) + "";
         char xCoord = promote_pieces[0].charAt(1);
-        int yCoord = Integer.parseInt(promote_pieces[0].charAt(1) + "");
-        String newPiece = promote_pieces[1].charAt(1) + "";
+        int yCoord = Integer.parseInt(promote_pieces[0].charAt(2) + "");
+        String newPiece = promote_pieces[1].charAt(0) + "";
 
         boolean capture = false;
         if (move.contains("x"))
@@ -250,7 +259,9 @@ public class Player {
     
     private boolean canThisRookMove(Piece p, Character x, Integer y, boolean capture) {
     	int myDist = distance(p.getX(), p.getY(), x, y);
-    	for(Piece inbw: this.pieces) {
+    	ArrayList <Piece> allPieces = new ArrayList<Piece>(this.pieces);
+    	allPieces.addAll(this.otherPlayerPieces);
+    	for(Piece inbw: allPieces) {
     		if(inbw.equals(p)|| (inbw.getX() == x && inbw.getY() == y))
     			continue;
     		if(distance(p, inbw) + distance(inbw.getX(), inbw.getY(), x, y) == myDist) {
@@ -274,6 +285,18 @@ public class Player {
                 return;
             }
         }
+        System.out.println("here");
+        int offset = 1;
+        if(!this.isWhite)
+        	offset = -1;
+        for (Piece piece:pieces){
+            if (piece.getX() == xCoord && piece.getY() == yCoord+offset){
+            	System.out.println("Captured");
+                pieces.remove(piece);
+                return;
+            }
+        }
+        
     }
 
 

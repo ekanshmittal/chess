@@ -42,11 +42,13 @@ public class Piece {
 	
 	public boolean canMoveTo(Character x, Integer y, boolean isCaptureMove) {
 		if (ChessConstants.PAWN.equals(name)) {
-			if((isWhite && (y <= this.y))) {
+			if((isWhite && (y <= this.y))||(!isWhite && (y >= this.y))) {
 				return false;
 			}
 			if ((Math.abs(x - this.x) == 1 && isCaptureMove) || this.x == x) {
 				if (this.y == 2 || this.y == 7) {
+					if(isCaptureMove)
+						return Math.abs(this.y - y) <= 1;
 					return Math.abs(this.y - y) <= 2;
 				} else {
 					
