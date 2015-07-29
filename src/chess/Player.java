@@ -14,35 +14,35 @@ public class Player {
 		if(isWhite)
 			offset = 0;
 		for(int i = 0; i < 8; ++i) {
-			pieces.add(new Piece("P", (char)('a'+ i), offset*5 + 2));
+			pieces.add(new Piece(ChessConstants.PAWN, (char)('a'+ i), offset*5 + 2));
 		}
 		for(int i = 0; i < 2; ++i) {
-			pieces.add(new Piece("R", (char)('a'+ i*7), offset*7 + 1));
-			pieces.add(new Piece("N", (char)('a'+ i*5 + 1), offset*7 + 1));
-			pieces.add(new Piece("B", (char)('a'+ i*3 + 2), offset*7 + 1));
+			pieces.add(new Piece(ChessConstants.ROOK, (char)('a'+ i*7), offset*7 + 1));
+			pieces.add(new Piece(ChessConstants.KNIGHT, (char)('a'+ i*5 + 1), offset*7 + 1));
+			pieces.add(new Piece(ChessConstants.BISHOP, (char)('a'+ i*3 + 2), offset*7 + 1));
 		}
-		pieces.add(new Piece("K", (char)('a'+ 4), offset*7 + 1));
-		pieces.add(new Piece("Q", (char)('a'+ 3), offset*7 + 1));
+		pieces.add(new Piece(ChessConstants.KING, (char)('a'+ 4), offset*7 + 1));
+		pieces.add(new Piece(ChessConstants.QUEEN, (char)('a'+ 3), offset*7 + 1));
 	}
 	
 	private void castle (String move) {
 		if ("O-O".equals(move.toUpperCase())){
 			
-            Piece rook = findPiece("R", 'h', -1);
+            Piece rook = findPiece(ChessConstants.KING, 'h', -1);
             if (rook != null){
                 rook.setX('f');
             }
-            Piece king = findPiece("K", 'e', -1);
+            Piece king = findPiece(ChessConstants.KING, 'e', -1);
             if (king != null){
                 king.setX('g');
             }
         }
         else {
-            Piece rook = findPiece("R", 'a', -1);
+            Piece rook = findPiece(ChessConstants.KING, 'a', -1);
             if (rook != null){
                 rook.setX('d');
             }
-            Piece king = findPiece("K", 'e', -1);
+            Piece king = findPiece(ChessConstants.KING, 'e', -1);
             if (king != null){
                 king.setX('c');
             }
@@ -66,8 +66,8 @@ public class Player {
 		if(Character.isUpperCase(first))
 			pieceName = first.toString();
 		else {
-            pieceName = "P";
-            move = "P" + move;
+            pieceName = ChessConstants.PAWN;
+            move = ChessConstants.PAWN + move;
         }
 
         //handling check moves
