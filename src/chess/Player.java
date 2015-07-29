@@ -14,35 +14,35 @@ public class Player {
 		if(isWhite)
 			offset = 0;
 		for(int i = 0; i < 8; ++i) {
-			pieces.add(new Piece("P", (char)('a'+ i), offset*5 + 2));
+			pieces.add(new Piece(ChessConstants.PAWN, (char)('a'+ i), offset*5 + 2));
 		}
 		for(int i = 0; i < 2; ++i) {
-			pieces.add(new Piece("R", (char)('a'+ i*7), offset*7 + 1));
-			pieces.add(new Piece("N", (char)('a'+ i*5 + 1), offset*7 + 1));
-			pieces.add(new Piece("B", (char)('a'+ i*3 + 2), offset*7 + 1));
+			pieces.add(new Piece(ChessConstants.ROOK, (char)('a'+ i*7), offset*7 + 1));
+			pieces.add(new Piece(ChessConstants.KNIGHT, (char)('a'+ i*5 + 1), offset*7 + 1));
+			pieces.add(new Piece(ChessConstants.BISHOP, (char)('a'+ i*3 + 2), offset*7 + 1));
 		}
-		pieces.add(new Piece("K", (char)('a'+ 4), offset*7 + 1));
-		pieces.add(new Piece("Q", (char)('a'+ 3), offset*7 + 1));
+		pieces.add(new Piece(ChessConstants.KING, (char)('a'+ 4), offset*7 + 1));
+		pieces.add(new Piece(ChessConstants.QUEEN, (char)('a'+ 3), offset*7 + 1));
 	}
 	
 	private void castle (String move) {
 		if ("O-O".equals(move.toUpperCase())){
 			
-            Piece rook = findPiece("R", 'h', -1);
+            Piece rook = findPiece(ChessConstants.ROOK, 'h', -1);
             if (rook != null){
                 rook.setX('f');
             }
-            Piece king = findPiece("K", 'e', -1);
+            Piece king = findPiece(ChessConstants.KING, 'e', -1);
             if (king != null){
                 king.setX('g');
             }
         }
         else {
-            Piece rook = findPiece("R", 'a', -1);
+            Piece rook = findPiece(ChessConstants.ROOK, 'a', -1);
             if (rook != null){
                 rook.setX('d');
             }
-            Piece king = findPiece("K", 'e', -1);
+            Piece king = findPiece(ChessConstants.KING, 'e', -1);
             if (king != null){
                 king.setX('c');
             }
@@ -66,8 +66,8 @@ public class Player {
 		if(Character.isUpperCase(first))
 			pieceName = first.toString();
 		else {
-            pieceName = "P";
-            move = "P" + move;
+            pieceName = ChessConstants.PAWN;
+            move = ChessConstants.PAWN + move;
         }
 
         //handling check moves
@@ -79,15 +79,15 @@ public class Player {
             move = move.substring(0, move.length() - 1);
             won = true;
         }
+        
+        if(pieceName.equals("O")) {
+			castle(move);
+			return;
+		}
 
         if(solveAmbiguity(move)){
             return;
         }
-
-		if(pieceName.equals("O")) {
-			castle(move);
-			return;
-		}
 
         //handling promotion moves
         if (move.contains("=")){
@@ -104,14 +104,21 @@ public class Player {
         if (move.contains("x"))
             capture = true;
 
+        boolean done = false;
 		for(Piece p: this.pieces) {
 			if(p.getName().equals(pieceName) && !p.isCaptured() && p.canMoveTo(x, y, capture)) {
-
+				if(pieceName.equals("R"))  {
+            		if(canThisRookMove(p, x, y, capture)==false)
+            			continue;
+            	}
 				p.setX(x);
 				p.setY(y);
+				done = true;
 				break;
 			}
 		}
+		if(!done)
+			System.out.println("ERROR!!" + move);
 	}
 
     public boolean solveAmbiguity(String move){
@@ -149,10 +156,8 @@ public class Player {
             return false;
         Piece piece = findPiece(pieceName, file, rank);
 
-
         piece.setX(toX);
         piece.setY(toY);
-
         return true;
     }
 
@@ -192,29 +197,58 @@ public class Player {
     public void updatePiecePositions(String player_move) {
         String[] indv_moves = player_move.trim().split(" ");
         if (isWhite){
-            if (indv_moves.length > 1 && indv_moves[1].contains("x"))
-                capture(indv_moves[1].split("x")[1]);
-
-            //update for the own move
             apply(indv_moves[0]);
         }
         else {
-            //update if any captured
-            if (indv_moves[0].contains("x"))
-                capture(indv_moves[0].split("x")[1]);
-
-            //update for the own move
             if (indv_moves.length > 1)
                 apply(indv_moves[1]);
         }
+    }
+    
+    public void doCapture(String player_move) {
+    	String[] indv_moves = player_move.trim().split(" ");
+    	
+    	
+    	if (isWhite){
+    		if (indv_moves.length > 1 && indv_moves[1].contains("x"))
+                capture(indv_moves[1].split("x")[1]);
+        }
+        else {
+        	if (indv_moves.length > 1 && indv_moves[0].contains("x"))
+                capture(indv_moves[0].split("x")[1]);
+        }
+        //update for the own move
+    }
+    
+    private int distance(char x1, int y1, char x2, int y2) {
+    	return Math.abs(x2 - x1) + Math.abs(y2-y1);
+    }
+    
+    private int distance(Piece p1, Piece p2) {
+    	return distance(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+    }
+    
+    private boolean canThisRookMove(Piece p, Character x, Integer y, boolean capture) {
+    	int myDist = distance(p.getX(), p.getY(), x, y);
+    	for(Piece inbw: this.pieces) {
+    		if(inbw.equals(p) || (inbw.getX() == x && inbw.getY() == y))
+    			continue;
+    		if(distance(p, inbw) + distance(inbw.getX(), inbw.getY(), x, y) == myDist) {
+    			return false;
+    		}
+    	}
+    	return true;
     }
 
     private void capture(String position) {
         Character xCoord = position.charAt(0);
         Integer yCoord = Integer.parseInt(position.charAt(1) + "");
+        System.out.println("Capture called");
         //check which Piece is in that position
+        System.out.println(xCoord + " " + yCoord);
         for (Piece piece:pieces){
-            if (piece.getX() == xCoord && piece.getY() == yCoord){
+            if (piece.getX() == xCoord && piece.getY() == yCoord && !piece.isCaptured()){
+            	System.out.println("Captured");
                 piece.capture();
             }
         }

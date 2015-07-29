@@ -21,24 +21,29 @@ public class TestChess {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        cg.displayChessBoard();
 	}
 	
 	@Test
 	public void testMov(){
-		ChessGame cg = new ChessGame();
-		cg.applyMove("e4 e5");
-		cg.applyMove("Nf3 Nc6");
-		cg.applyMove("Bb5 a6");
-		cg.applyMove("Ba4 Nf6");
-		cg.applyMove("O-O Be7");
-		
-		cg.white_player.printPositions();
-	    cg.black_player.printPositions();
+//		ChessGame cg = new ChessGame();
+//		cg.applyMove("e4 e5");
+//		cg.applyMove("Nf3 Nc6");
+//		cg.applyMove("Bb5 a6");
+//		cg.applyMove("Ba4 Nf6");
+//		cg.applyMove("O-O Be7");
+//		
+//		cg.white_player.printPositions();
+//	    cg.black_player.printPositions();
 	}
 	@Test
 	public void testPrint(){
-		ChessGame cg = new ChessGame();
-		cg.applyMove("e4 e5");
-		cg.displayChessBoard();
+//		ChessGame cg = new ChessGame();
+//		cg.applyMove("e4 e5");
+//		cg.applyMove("Nf3 Nc6");
+//		cg.applyMove("Bb5 a6");
+//		cg.applyMove("Ba4 Nf6");
+//		cg.applyMove("O-O Be7");
+//		cg.displayChessBoard();
 	}
 }

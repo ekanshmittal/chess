@@ -18,6 +18,7 @@ public class ChessGame {
 		BufferedReader br = new BufferedReader(new FileReader(
 				new File(fileName)));
 		String newMove;
+		int count = 1;
 		do {
 			newMove = br.readLine();
 			if (newMove != null) {
@@ -25,11 +26,17 @@ public class ChessGame {
 				String init_player_moves[] = newMove.split("\\*");
 				String[] player_moves = Arrays.copyOfRange(init_player_moves,
 						1, init_player_moves.length);
+				
 				for (String move : player_moves) {
 					if (move != null) {
 						white_player.updatePiecePositions(move);
+						black_player.doCapture(move);
 						black_player.updatePiecePositions(move);
+						white_player.doCapture(move);
 					}
+					System.out.println(count);
+					displayChessBoard();
+					count++;
 				}
 			}
 
@@ -51,12 +58,16 @@ public class ChessGame {
 		}
 		for (Piece piece : white_player.pieces) {
 			if (!piece.isCaptured()) {
+				if(board[8 - (piece.getY())][piece.getX() - 'a'].pieceName != null)
+					System.out.println("ERROR MORE THAN 1 PIECE");
 				board[8 - (piece.getY())][piece.getX() - 'a'].pieceName = "W_"
 						+ piece.getName();
 			}
 		}
 		for (Piece piece : black_player.pieces) {
 			if (!piece.isCaptured()) {
+				if(board[8 - (piece.getY())][piece.getX() - 'a'].pieceName != null)
+					System.out.println("ERROR MORE THAN 1 PIECE");
 				board[8 - (piece.getY())][piece.getX() - 'a'].pieceName = "B_"
 						+ piece.getName();
 			}
@@ -67,7 +78,7 @@ public class ChessGame {
 			}
 			for (int j = 0; j < 8; j++) {
 				if (j == 0) {
-					System.out.print(i + 1 + " ");
+					System.out.print(8 - i + " ");
 				}
 				if (board[i][j].pieceName != null) {
 					System.out.print(board[i][j].pieceName + " ");
