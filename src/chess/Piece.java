@@ -7,11 +7,21 @@ public class Piece {
 	private String name;
 	private Character x;
 	private Integer y;
+	private boolean deleted;
 
 	public Piece(String name, Character x, Integer y) {
 		this.name = name;
 		this.x = x;
 		this.y = y;
+		deleted = false;
+	}
+	
+	public boolean isDeleted() {
+		return this.deleted;
+	}
+	
+	public void delete() {
+		this.deleted = true;
 	}
 
 	public char getX() {

@@ -19,13 +19,18 @@ public class Player {
 		}
 		pieces.add(new Piece("K", (char)('a'+ 4), offset*8));
 		pieces.add(new Piece("Q", (char)('a'+ 3), offset*8));
-		for(Piece p: pieces) {
-			System.out.println(p);
-		}
 	}
 	
 	void apply(String move) {
-		
+		pieces.get(0).setX('d');
+		pieces.get(1).delete();
+	}
+	
+	void printPositions () {
+		for (Piece p: this.pieces) {
+			if(!p.isDeleted())
+				System.out.println(p);
+		}
 	}
 
     public void updatePiecePositions(String player_move, boolean captured) {
