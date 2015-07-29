@@ -52,10 +52,10 @@ public class ChessGame {
     		System.out.println();
     	}
     	for(Piece piece:white_player.pieces){
-    		board[piece.getY()-1][7-(piece.getX()-'a')].pieceName="W_"+piece.getName();
+    		board[7-(piece.getY()-1)][piece.getX()-'a'].pieceName="W_"+piece.getName();
     	}
     	for(Piece piece:black_player.pieces){
-    		board[piece.getY()-1][7-(piece.getX()-'a')].pieceName="B_"+piece.getName();
+    		board[7-(piece.getY()-1)][piece.getX()-'a'].pieceName="B_"+piece.getName();
     	}
     	for(int i=0;i<8;i++){
     		for(int j=0;j<8;j++){
