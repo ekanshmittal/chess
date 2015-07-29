@@ -8,7 +8,7 @@ import org.junit.Test;
 public class TestChess {
 	@Test
 	public void testCanMoveTo(){
-		Piece piece=new Piece("P", 'a', 2);
+		Piece piece=new Piece("P", 'a', 2, true);
 		assertEquals(true, piece.canMoveTo('a',3,false));
 		assertEquals(false, piece.canMoveTo('e', 4, false));
 	}

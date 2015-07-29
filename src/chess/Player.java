@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 	ArrayList <Piece> pieces;
@@ -14,15 +15,15 @@ public class Player {
 		if(isWhite)
 			offset = 0;
 		for(int i = 0; i < 8; ++i) {
-			pieces.add(new Piece(ChessConstants.PAWN, (char)('a'+ i), offset*5 + 2));
+			pieces.add(new Piece(ChessConstants.PAWN, (char)('a'+ i), offset*5 + 2, isWhite));
 		}
 		for(int i = 0; i < 2; ++i) {
-			pieces.add(new Piece(ChessConstants.ROOK, (char)('a'+ i*7), offset*7 + 1));
-			pieces.add(new Piece(ChessConstants.KNIGHT, (char)('a'+ i*5 + 1), offset*7 + 1));
-			pieces.add(new Piece(ChessConstants.BISHOP, (char)('a'+ i*3 + 2), offset*7 + 1));
+			pieces.add(new Piece(ChessConstants.ROOK, (char)('a'+ i*7), offset*7 + 1, isWhite));
+			pieces.add(new Piece(ChessConstants.KNIGHT, (char)('a'+ i*5 + 1), offset*7 + 1, isWhite));
+			pieces.add(new Piece(ChessConstants.BISHOP, (char)('a'+ i*3 + 2), offset*7 + 1, isWhite));
 		}
-		pieces.add(new Piece(ChessConstants.KING, (char)('a'+ 4), offset*7 + 1));
-		pieces.add(new Piece(ChessConstants.QUEEN, (char)('a'+ 3), offset*7 + 1));
+		pieces.add(new Piece(ChessConstants.KING, (char)('a'+ 4), offset*7 + 1, isWhite));
+		pieces.add(new Piece(ChessConstants.QUEEN, (char)('a'+ 3), offset*7 + 1, isWhite));
 	}
 	
 	private void castle (String move) {
@@ -58,6 +59,17 @@ public class Player {
         }
         return null;
     }
+    
+    private List<Piece> findAllPieces(String pieceName, char xCoord, int yCoord) {
+    	ArrayList<Piece> pieces = new ArrayList<Piece>();
+        for (Piece piece:this.pieces){
+            if (piece.getName().equals(pieceName) && (piece.getX() == xCoord || xCoord == 'm') && (piece.getY() == yCoord || yCoord == -1)){
+                pieces.add(piece);
+            }
+        }
+        return pieces;
+    }
+    
 
     public void apply(String move) {
 		Character first = move.charAt(0);
@@ -105,6 +117,7 @@ public class Player {
             capture = true;
 
         boolean done = false;
+        
 		for(Piece p: this.pieces) {
 			if(p.getName().equals(pieceName) && p.canMoveTo(x, y, capture)) {
 				if(pieceName.equals("R"))  {
@@ -126,8 +139,10 @@ public class Player {
         String xRemoved = "";
         char toX;
         int toY;
+        boolean capture = false;
         String pieceName;
         if (move.contains("x")) {
+        	capture = true;
             xRemoved = move.substring(0, move.indexOf("x")) + move.substring(move.indexOf("x") + 1);
         }
         else
@@ -152,10 +167,18 @@ public class Player {
 
         if (file == 'm' && rank == -1 )
             return false;
-        Piece piece = findPiece(pieceName, file, rank);
-
-        piece.setX(toX);
-        piece.setY(toY);
+        
+        for(Piece p: findAllPieces(pieceName, file, rank)) {
+        	if(p.getName().equals(pieceName) && p.canMoveTo(toX, toY, capture)) {
+				if(pieceName.equals("R"))  {
+            		if(canThisRookMove(p, toX, toY, capture)==false)
+            			continue;
+            	}
+				p.setX(toX);
+				p.setY(toY);
+				break;
+			}
+        }
         return true;
     }
 
