@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 
 public class Player {
 
