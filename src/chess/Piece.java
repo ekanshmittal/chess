@@ -32,7 +32,8 @@ public class Piece {
 					|| (Math.abs(this.y - y) == 2 && Math.abs(this.x - x) == 1);
 		} else if ("B".equals(name)) {
 			return Math.abs(this.x - x) == Math.abs(this.y - y);
-		}		return true;
+		}
+		return true;
 	}
 
 	public boolean isCaptured() {
