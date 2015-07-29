@@ -77,7 +77,7 @@ public class Player {
         //check which Piece is in that position
         for (Piece piece:pieces){
             if (piece.getX() == xCoord && piece.getY() == yCoord){
-                piece.delete();
+                piece.capture();
             }
         }
     }
