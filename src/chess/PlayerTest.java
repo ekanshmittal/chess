@@ -25,6 +25,6 @@ public class PlayerTest {
 
     @Test
     public void testSolveAmbiguity() throws Exception {
-        assertEquals(true, p.solveAmbiguity("N9e2"));
+        assertEquals(true, p.solveAmbiguity("Nb1e2"));
     }
 }

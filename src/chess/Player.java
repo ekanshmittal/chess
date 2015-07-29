@@ -1,4 +1,4 @@
-package chess;
+package chess.src.chess;
 
 import java.util.ArrayList;
 
@@ -52,7 +52,7 @@ public class Player {
 
     private Piece findPiece(String pieceName, char xCoord, int yCoord) {
         for (Piece piece:this.pieces){
-            if (piece.getName().equals(pieceName) && (piece.getX() == xCoord || xCoord == 'm') && (piece.getY() == yCoord || yCoord == -1)){
+            if (!piece.isCaptured() && piece.getName().equals(pieceName) && (piece.getX() == xCoord || xCoord == 'm') && (piece.getY() == yCoord || yCoord == -1)){
                 return piece;
             }
         }
@@ -152,8 +152,6 @@ public class Player {
 
         piece.setX(toX);
         piece.setY(toY);
-        if (captured)
-            piece.capture();
 
         return true;
     }

@@ -1,4 +1,4 @@
-package chess;
+package chess.src.chess;
 
 public class ChessConstants {
 	public final static String PAWN = "P";
