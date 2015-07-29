@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 
 /**
  * Created by test on 7/29/2015.
@@ -7,23 +7,13 @@ public class Piece {
 	private String name;
 	private Character x;
 	private Integer y;
-	private boolean captured;
 
 	public Piece(String name, Character x, Integer y) {
 		this.name = name;
 		this.x = x;
 		this.y = y;
-		captured = false;
 	}
 	
-	public boolean isCaptured() {
-		return this.captured;
-	}
-
-	public void capture() {
-		this.captured = true;
-	}
-
 	public char getX() {
 		return x;
 	}

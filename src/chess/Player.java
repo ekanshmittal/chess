@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 
 import java.util.ArrayList;
 
@@ -52,7 +52,7 @@ public class Player {
 
     private Piece findPiece(String pieceName, char xCoord, int yCoord) {
         for (Piece piece:this.pieces){
-            if (!piece.isCaptured() && piece.getName().equals(pieceName) && (piece.getX() == xCoord || xCoord == 'm') && (piece.getY() == yCoord || yCoord == -1)){
+            if (piece.getName().equals(pieceName) && (piece.getX() == xCoord || xCoord == 'm') && (piece.getY() == yCoord || yCoord == -1)){
                 return piece;
             }
         }
@@ -106,7 +106,7 @@ public class Player {
 
         boolean done = false;
 		for(Piece p: this.pieces) {
-			if(p.getName().equals(pieceName) && !p.isCaptured() && p.canMoveTo(x, y, capture)) {
+			if(p.getName().equals(pieceName) && p.canMoveTo(x, y, capture)) {
 				if(pieceName.equals("R"))  {
             		if(canThisRookMove(p, x, y, capture)==false)
             			continue;
@@ -124,12 +124,10 @@ public class Player {
     public boolean solveAmbiguity(String move){
 
         String xRemoved = "";
-        boolean captured = false;
         char toX;
         int toY;
         String pieceName;
         if (move.contains("x")) {
-            captured = true;
             xRemoved = move.substring(0, move.indexOf("x")) + move.substring(move.indexOf("x") + 1);
         }
         else
@@ -176,7 +174,7 @@ public class Player {
             won = true;
 
         for(Piece p: this.pieces) {
-            if(p.getName().equals(oldPiece) && !p.isCaptured() && p.canMoveTo(xCoord, yCoord, capture)) {
+            if(p.getName().equals(oldPiece) && p.canMoveTo(xCoord, yCoord, capture)) {
                 p.setName(newPiece);
                 p.setX(xCoord);
                 p.setY(yCoord);
@@ -187,8 +185,7 @@ public class Player {
 
     void printPositions () {
 		for (Piece p: this.pieces) {
-			if(!p.isCaptured())
-				System.out.println(p);
+			System.out.println(p);
 		}
 		System.out.println();
 	}
@@ -231,9 +228,10 @@ public class Player {
     private boolean canThisRookMove(Piece p, Character x, Integer y, boolean capture) {
     	int myDist = distance(p.getX(), p.getY(), x, y);
     	for(Piece inbw: this.pieces) {
-    		if(inbw.equals(p) || (inbw.getX() == x && inbw.getY() == y))
+    		if(inbw.equals(p)|| (inbw.getX() == x && inbw.getY() == y))
     			continue;
     		if(distance(p, inbw) + distance(inbw.getX(), inbw.getY(), x, y) == myDist) {
+    			System.out.println(inbw);
     			return false;
     		}
     	}
@@ -247,9 +245,10 @@ public class Player {
         //check which Piece is in that position
         System.out.println(xCoord + " " + yCoord);
         for (Piece piece:pieces){
-            if (piece.getX() == xCoord && piece.getY() == yCoord && !piece.isCaptured()){
+            if (piece.getX() == xCoord && piece.getY() == yCoord){
             	System.out.println("Captured");
-                piece.capture();
+                pieces.remove(piece);
+                return;
             }
         }
     }
