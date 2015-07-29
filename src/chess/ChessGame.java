@@ -38,22 +38,6 @@ public class ChessGame {
         br.close();
 
     }
-
-
-    public static void main(String[] args){
-    	Player white = new Player(true);
-		Player black = new Player(false);
-		white.apply("eb5");
-		white.printPositions();
-		black.printPositions();
-        ChessGame cg = new ChessGame();
-        try {
-            cg.readFile("C:\\faltUi\\untitled\\src\\chess\\Adams.pgn");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
 
    /* if(player_moves[0].contains("x"))
