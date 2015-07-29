@@ -24,10 +24,40 @@ public class Player {
 	}
 	
 	private void castle (String move) {
-		
+		if ("O-O".equals(move.toUpperCase())){
+			
+            Piece rook = findPiece("R", 'h');
+            if (rook != null){
+                rook.setX('f');
+            }
+            Piece king = findPiece("K", 'e');
+            if (king != null){
+                king.setX('g');
+            }
+        }
+        else {
+            Piece rook = findPiece("R", 'a');
+            if (rook != null){
+                rook.setX('d');
+            }
+            Piece king = findPiece("K", 'e');
+            if (king != null){
+                king.setX('c');
+            }
+
+        }
 	}
-	
-	public void apply(String move) {
+
+    private Piece findPiece(String pieceName, char xCoord) {
+        for (Piece piece:this.pieces){
+            if (piece.getName().equals(pieceName) && piece.getX() == xCoord){
+                return piece;
+            }
+        }
+        return null;
+    }
+
+    public void apply(String move) {
 		Character first = move.charAt(0);
 		if(move.charAt(move.length()-1) == '+')
 			move = move.substring(0, move.length()-1);
