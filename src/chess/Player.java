@@ -114,7 +114,8 @@ public class Player {
 		}
 	}
 
-    private boolean solveAmbiguity(String move){
+    public boolean solveAmbiguity(String move){
+
         String xRemoved = "";
         boolean captured = false;
         char toX;
@@ -127,27 +128,28 @@ public class Player {
         else
             xRemoved = move;
 
-        toY = Integer.parseInt(xRemoved.charAt(xRemoved.length()-1) + "");
+        toY = Integer.parseInt(xRemoved.charAt(xRemoved.length() - 1) + "");
         toX = xRemoved.charAt(xRemoved.length() - 2);
         pieceName = xRemoved.charAt(0) + "";
 
         char file = 'm';
         int rank = -1;
         xRemoved = xRemoved.substring(1,xRemoved.length() - 2);
-        if (xRemoved.contains("[a-z]")) {
+        if (xRemoved.matches(".*[a-z]+.*")) {
             file = xRemoved.charAt(0);
             xRemoved = xRemoved.substring(1,xRemoved.length());
         }
 
-        if (xRemoved.contains("[0-9]")) {
-            rank = xRemoved.charAt(0);
+        if (xRemoved.matches(".*[0-9]+")) {
+            rank = Integer.parseInt(xRemoved.charAt(0) + "");
             xRemoved = xRemoved.substring(1,xRemoved.length());
         }
 
         if (file == 'm' && rank == -1 )
             return false;
-
         Piece piece = findPiece(pieceName, file, rank);
+
+
         piece.setX(toX);
         piece.setY(toY);
         if (captured)
