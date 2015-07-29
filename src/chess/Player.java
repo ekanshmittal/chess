@@ -23,4 +23,8 @@ public class Player {
 			System.out.println(p);
 		}
 	}
+
+    public void updatePiecePositions(String player_move, boolean captured) {
+    }
+    
 }
