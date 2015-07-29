@@ -45,7 +45,7 @@ public class Player {
 		Character x = position.charAt(0);
 		Integer y = Integer.parseInt(position.substring(1));
 		for(Piece p: this.pieces) {
-			if(p.getName().equals(pieceName) && !p.isCaptured() && p.canMoveTo(x, y)) {
+			if(p.getName().equals(pieceName) && !p.isCaptured() && p.canMoveTo(x, y,p.isCaptured())) {
 				p.setX(x);
 				p.setY(y);
 				break;
