@@ -36,6 +36,8 @@ public class ChessGame {
 
         }while (newMove != null);
         br.close();
+        white_player.printPositions();
+        black_player.printPositions();
 
     }
 
@@ -48,7 +50,7 @@ public class ChessGame {
 		black.printPositions();
         ChessGame cg = new ChessGame();
         try {
-            cg.readFile("C:\\faltUi\\untitled\\src\\chess\\Adams.pgn");
+            cg.readFile(System.getProperty("user.dir")+"\\Adams.pgn");
         } catch (IOException e) {
             e.printStackTrace();
         }

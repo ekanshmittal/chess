@@ -24,13 +24,23 @@ public class Player {
 		pieces.add(new Piece("Q", (char)('a'+ 3), offset*7 + 1));
 	}
 	
+	private void castle (String move) {
+		
+	}
+	
 	public void apply(String move) {
 		Character first = move.charAt(0);
+		if(move.charAt(move.length()-1) == '+')
+			move = move.substring(0, move.length()-1);
 		String pieceName = "";
 		if(Character.isUpperCase(first))
 			pieceName = first.toString();
 		else
 			pieceName = "P";
+		if(pieceName.equals("O")) {
+			castle(move);
+			return;
+		}
 		String position = move.substring(move.length()-2);
 		Character x = position.charAt(0);
 		Integer y = Integer.parseInt(position.substring(1));
