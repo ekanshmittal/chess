@@ -15,15 +15,24 @@ public class Piece {
 		this.y = y;
 		captured = false;
 	}
-	
+
 	public boolean canMoveTo(Character x, Integer y) {
+		if ("P".equals(name)) {
+
+		} else if ("R".equals(name)) {
+		} else if ("N".equals(name)) {
+		} else if ("B".equals(name)) {
+		} else if ("K".equals(name)) {
+		} else if ("Q".equals(name)) {
+		}
+
 		return true;
 	}
-	
+
 	public boolean isCaptured() {
 		return this.captured;
 	}
-	
+
 	public void capture() {
 		this.captured = true;
 	}
