@@ -40,7 +40,6 @@ public class TestChess {
 	public void testPrint(){
 		ChessGame cg = new ChessGame();
 		cg.applyMove("e4 e5");
-		cg.white_player.printPositions();
 		cg.displayChessBoard();
 	}
 }
