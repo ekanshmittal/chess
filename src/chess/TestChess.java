@@ -41,6 +41,7 @@ public class TestChess {
 		cg.applyMove("Ba4 Nf6");
 		cg.applyMove("O-O Be7");
 		cg.applyMove("Re1 b5");
+		cg.applyMove("c3 O-O");
 		cg.displayChessBoard();
 	}
 }
