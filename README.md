@@ -1,5 +1,5 @@
 # chess
-To input and parse a Portable Game Notation(.pgn) file and determine the final positions of pieces on chess board.
+To input and parse a Portable Game Notation(.pgn) file and determine the final positions of pieces on the chess board.
 
 Team members
 1. Apoorv Umang Saxena
