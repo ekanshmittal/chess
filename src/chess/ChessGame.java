@@ -49,20 +49,19 @@ public class ChessGame {
     		for(int j=0;j<8;j++){
     			board[i][j]=new BoardSquare();
     		}
-    		System.out.println();
     	}
     	for(Piece piece:white_player.pieces){
-    		board[7-(piece.getY()-1)][piece.getX()-'a'].pieceName="W_"+piece.getName();
+    		board[8-(piece.getY())][piece.getX()-'a'].pieceName="W_"+piece.getName();
     	}
     	for(Piece piece:black_player.pieces){
-    		board[7-(piece.getY()-1)][piece.getX()-'a'].pieceName="B_"+piece.getName();
+    		board[8-(piece.getY())][piece.getX()-'a'].pieceName="B_"+piece.getName();
     	}
     	for(int i=0;i<8;i++){
     		for(int j=0;j<8;j++){
     			if(board[i][j].pieceName!=null)
     			System.out.print(board[i][j].pieceName+" ");
     			else {
-    				System.out.print("  \t");
+    				System.out.print("    ");
     			}
     		}
     		System.out.println();
@@ -70,6 +69,11 @@ public class ChessGame {
     }
     private class BoardSquare{
     	String pieceName;
+    }
+    public static void main(String[] args){
+    	ChessGame cg = new ChessGame();
+		//cg.applyMove("e4 e5");
+		cg.displayChessBoard();
     }
 }
 
