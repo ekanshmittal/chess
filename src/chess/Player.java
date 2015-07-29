@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 
 import java.util.ArrayList;
 
@@ -25,23 +25,24 @@ public class Player {
 	
 	private void castle (String move) {
 		if ("O-O".equals(move.toUpperCase())){
+			
             Piece rook = findPiece("R", 'h');
             if (rook != null){
-                rook.setX((char)(rook.getX() - 2));
+                rook.setX('f');
             }
             Piece king = findPiece("K", 'e');
-            if (rook != null){
-                rook.setX((char)(king.getX() + 2));
+            if (king != null){
+                king.setX('g');
             }
         }
         else {
             Piece rook = findPiece("R", 'a');
             if (rook != null){
-                rook.setX((char)(rook.getX() + 3));
+                rook.setX('d');
             }
             Piece king = findPiece("K", 'e');
-            if (rook != null){
-                rook.setX((char)(king.getX() - 2));
+            if (king != null){
+                king.setX('c');
             }
 
         }
