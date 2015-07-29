@@ -18,7 +18,13 @@ public class Piece {
 
 	public boolean canMoveTo(Character x, Integer y) {
 		if ("P".equals(name)) {
-
+			if (Math.abs(x - this.x) <= 1) {
+				if (this.y == 2 || this.y == 7) {
+					return Math.abs(this.y - y) <= 2;
+				} else {
+					return Math.abs(this.y - y) == 1;
+				}
+			}
 		} else if ("R".equals(name)) {
 		} else if ("N".equals(name)) {
 		} else if ("B".equals(name)) {
