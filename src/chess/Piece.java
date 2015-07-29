@@ -16,6 +16,10 @@ public class Piece {
 		deleted = false;
 	}
 	
+	public boolean canMoveTo(Character x, Integer y) {
+		return true;
+	}
+	
 	public boolean isDeleted() {
 		return this.deleted;
 	}
