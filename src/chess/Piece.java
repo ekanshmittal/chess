@@ -20,7 +20,7 @@ public class Piece {
 		return true;
 	}
 	
-	public boolean isDeleted() {
+	public boolean isCaptured() {
 		return this.deleted;
 	}
 	
