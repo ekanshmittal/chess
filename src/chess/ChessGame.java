@@ -52,12 +52,16 @@ public class ChessGame {
 			}
 		}
 		for (Piece piece : white_player.pieces) {
-			board[8 - (piece.getY())][piece.getX() - 'a'].pieceName = "W_"
-					+ piece.getName();
+			if (!piece.isCaptured()) {
+				board[8 - (piece.getY())][piece.getX() - 'a'].pieceName = "W_"
+						+ piece.getName();
+			}
 		}
 		for (Piece piece : black_player.pieces) {
-			board[8 - (piece.getY())][piece.getX() - 'a'].pieceName = "B_"
-					+ piece.getName();
+			if (!piece.isCaptured()) {
+				board[8 - (piece.getY())][piece.getX() - 'a'].pieceName = "B_"
+						+ piece.getName();
+			}
 		}
 		for (int i = 0; i < 8; i++) {
 			if (i == 0) {

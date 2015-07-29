@@ -28,21 +28,21 @@ public class Player {
 	private void castle (String move) {
 		if ("O-O".equals(move.toUpperCase())){
 			
-            Piece rook = findPiece("R", 'h');
+            Piece rook = findPiece("R", 'h', -1);
             if (rook != null){
                 rook.setX('f');
             }
-            Piece king = findPiece("K", 'e');
+            Piece king = findPiece("K", 'e', -1);
             if (king != null){
                 king.setX('g');
             }
         }
         else {
-            Piece rook = findPiece("R", 'a');
+            Piece rook = findPiece("R", 'a', -1);
             if (rook != null){
                 rook.setX('d');
             }
-            Piece king = findPiece("K", 'e');
+            Piece king = findPiece("K", 'e', -1);
             if (king != null){
                 king.setX('c');
             }
@@ -50,9 +50,9 @@ public class Player {
         }
 	}
 
-    private Piece findPiece(String pieceName, char xCoord) {
+    private Piece findPiece(String pieceName, char xCoord, int yCoord) {
         for (Piece piece:this.pieces){
-            if (piece.getName().equals(pieceName) && piece.getX() == xCoord){
+            if (piece.getName().equals(pieceName) && (piece.getX() == xCoord || xCoord == 'm') && (piece.getY() == yCoord || yCoord == -1)){
                 return piece;
             }
         }
@@ -70,25 +70,31 @@ public class Player {
             move = "P" + move;
         }
 
-		if(pieceName.equals("O")) {
-			castle(move);
-			return;
-		}
-
         //handling check moves
         if (move.contains("+"))
             move = move.substring(0, move.length() - 1);
 
         //handling check-mate moves
         if (move.contains("#")){
+            move = move.substring(0, move.length() - 1);
             won = true;
         }
-
+        
+        if(pieceName.equals("O")) {
+			castle(move);
+			return;
+		}
+        
         //handling promotion moves
         if (move.contains("=")){
             promote(move);
             return;
         }
+        
+        if(solveAmbiguity(move)){
+            return;
+        }
+
         
 		String position = move.substring(move.length()-2);
 		Character x = position.charAt(0);
@@ -123,7 +129,6 @@ public class Player {
     private boolean canThisRookMove(Piece p, Character x, Integer y, boolean capture) {
     	int myDist = distance(p.getX(), p.getY(), x, y);
     	for(Piece inbw: this.pieces) {
-    		System.out.println("here");
     		if(inbw.equals(p) || (inbw.getX() == x && inbw.getY() == y))
     			continue;
     		if(distance(p, inbw) + distance(inbw.getX(), inbw.getY(), x, y) == myDist) {
@@ -131,6 +136,48 @@ public class Player {
     		}
     	}
     	return true;
+    }
+
+    private boolean solveAmbiguity(String move){
+        String xRemoved = "";
+        boolean captured = false;
+        char toX;
+        int toY;
+        String pieceName;
+        if (move.contains("x")) {
+            captured = true;
+            xRemoved = move.substring(0, move.indexOf("x")) + move.substring(move.indexOf("x") + 1);
+        }
+        else
+            xRemoved = move;
+
+        toY = Integer.parseInt(xRemoved.charAt(xRemoved.length()-1) + "");
+        toX = xRemoved.charAt(xRemoved.length() - 2);
+        pieceName = xRemoved.charAt(0) + "";
+
+        char file = 'm';
+        int rank = -1;
+        xRemoved = xRemoved.substring(1,xRemoved.length() - 2);
+        if (xRemoved.contains("[a-z]")) {
+            file = xRemoved.charAt(0);
+            xRemoved = xRemoved.substring(1,xRemoved.length());
+        }
+
+        if (xRemoved.contains("[0-9]")) {
+            rank = xRemoved.charAt(0);
+            xRemoved = xRemoved.substring(1,xRemoved.length());
+        }
+
+        if (file == 'm' && rank == -1 )
+            return false;
+
+        Piece piece = findPiece(pieceName, file, rank);
+        piece.setX(toX);
+        piece.setY(toY);
+        if (captured)
+            piece.capture();
+
+        return true;
     }
 
     private void promote(String move) {
