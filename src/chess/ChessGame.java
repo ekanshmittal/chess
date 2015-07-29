@@ -27,7 +27,6 @@ public class ChessGame {
                 String[] player_moves = Arrays.copyOfRange(init_player_moves, 1, init_player_moves.length);
                 for (String move : player_moves) {
                     if (move != null) {
-//                        System.out.println(move);
                         white_player.updatePiecePositions(move);
                         black_player.updatePiecePositions(move);
                     }
@@ -61,3 +60,4 @@ public class ChessGame {
                 black_captured = true;
             if (player_moves[1].contains("x"))
                 white_captured = true;*/
+
