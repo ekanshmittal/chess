@@ -10,18 +10,22 @@ public class Player {
 		if(isWhite)
 			offset = 0;
 		for(int i = 0; i < 8; ++i) {
-			pieces.add(new Piece("P", (char)('a'+ i), offset*5 + 1));
+			pieces.add(new Piece("P", (char)('a'+ i), offset*5 + 2));
 		}
 		for(int i = 0; i < 2; ++i) {
-			pieces.add(new Piece("R", (char)('a'+ i*7), offset*7));
-			pieces.add(new Piece("N", (char)('a'+ i*5 + 1), offset*7));
-			pieces.add(new Piece("B", (char)('a'+ i*3 + 2), offset*7));
+			pieces.add(new Piece("R", (char)('a'+ i*7), offset*8));
+			pieces.add(new Piece("N", (char)('a'+ i*5 + 1), offset*8));
+			pieces.add(new Piece("B", (char)('a'+ i*3 + 2), offset*8));
 		}
-		pieces.add(new Piece("K", (char)('a'+ 4), offset*7));
-		pieces.add(new Piece("Q", (char)('a'+ 3), offset*7));
+		pieces.add(new Piece("K", (char)('a'+ 4), offset*8));
+		pieces.add(new Piece("Q", (char)('a'+ 3), offset*8));
 		for(Piece p: pieces) {
 			System.out.println(p);
 		}
+	}
+	
+	void apply(String move) {
+		
 	}
 
     public void updatePiecePositions(String player_move, boolean captured) {
