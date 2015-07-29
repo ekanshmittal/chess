@@ -101,13 +101,37 @@ public class Player {
 
 		for(Piece p: this.pieces) {
 			if(p.getName().equals(pieceName) && !p.isCaptured() && p.canMoveTo(x, y, capture)) {
-
+            	if(pieceName.equals("R"))  {
+            		if(canThisRookMove(p, x, y, capture)==false)
+            			continue;
+            	}
 				p.setX(x);
 				p.setY(y);
 				break;
 			}
 		}
 	}
+    
+    private int distance(char x1, int y1, char x2, int y2) {
+    	return Math.abs(x2 - x1) + Math.abs(y2-y1);
+    }
+    
+    private int distance(Piece p1, Piece p2) {
+    	return distance(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+    }
+    
+    private boolean canThisRookMove(Piece p, Character x, Integer y, boolean capture) {
+    	int myDist = distance(p.getX(), p.getY(), x, y);
+    	for(Piece inbw: this.pieces) {
+    		System.out.println("here");
+    		if(inbw.equals(p) || (inbw.getX() == x && inbw.getY() == y))
+    			continue;
+    		if(distance(p, inbw) + distance(inbw.getX(), inbw.getY(), x, y) == myDist) {
+    			return false;
+    		}
+    	}
+    	return true;
+    }
 
     private void promote(String move) {
         String[] promote_pieces = move.split("=");
@@ -125,7 +149,8 @@ public class Player {
 
         for(Piece p: this.pieces) {
             if(p.getName().equals(oldPiece) && !p.isCaptured() && p.canMoveTo(xCoord, yCoord, capture)) {
-                p.setName(newPiece);
+//                p.setName(newPiece);
+
                 p.setX(xCoord);
                 p.setY(yCoord);
                 break;
