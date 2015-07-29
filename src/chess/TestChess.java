@@ -39,6 +39,7 @@ public class TestChess {
 	@Test
 	public void testPrint(){
 		ChessGame cg = new ChessGame();
+		cg.applyMove("e4 e5");
 		cg.displayChessBoard();
 	}
 }
