@@ -9,7 +9,7 @@ import org.junit.Test;
 public class TestChess {
 	@Test
 	public void testCanMoveTo(){
-		Piece piece=new Piece("P", 'A', 2);;
+		Piece piece=new Piece("P", 'a', 2);
 		assertEquals(true, piece.canMoveTo('a',3,false));
 		assertEquals(false, piece.canMoveTo('e', 4, false));
 	}
@@ -30,7 +30,8 @@ public class TestChess {
 		ChessGame cg = new ChessGame();
 		cg.applyMove("e4 e5");
 		cg.applyMove("Nf3 Nc6");
-		 cg.white_player.printPositions();
-	        cg.black_player.printPositions();
+		cg.applyMove("Bb5 a6");
+		cg.white_player.printPositions();
+	    cg.black_player.printPositions();
 	}
 }
