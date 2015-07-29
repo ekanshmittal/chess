@@ -2,6 +2,7 @@ package chess;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class ChessGame {
 
@@ -41,5 +42,33 @@ public class ChessGame {
     	this.white_player.updatePiecePositions(move);
     	this.black_player.updatePiecePositions(move);
     }
-
+    
+    public void displayChessBoard(){
+    	BoardSquare[][] board=new BoardSquare[8][8];
+    	for(int i=0;i<8;i++){
+    		for(int j=0;j<8;j++){
+    			board[i][j]=new BoardSquare();
+    		}
+    		System.out.println();
+    	}
+    	for(Piece piece:white_player.pieces){
+    		board[piece.getY()-1][7-(piece.getX()-'a')].pieceName="W_"+piece.getName();
+    	}
+    	for(Piece piece:black_player.pieces){
+    		board[piece.getY()-1][7-(piece.getX()-'a')].pieceName="B_"+piece.getName();
+    	}
+    	for(int i=0;i<8;i++){
+    		for(int j=0;j<8;j++){
+    			if(board[i][j].pieceName!=null)
+    			System.out.print(board[i][j].pieceName+" ");
+    			else {
+    				System.out.print("  \t");
+    			}
+    		}
+    		System.out.println();
+    	}
+    }
+    private class BoardSquare{
+    	String pieceName;
+    }
 }

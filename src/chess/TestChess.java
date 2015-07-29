@@ -34,4 +34,9 @@ public class TestChess {
 		cg.white_player.printPositions();
 	    cg.black_player.printPositions();
 	}
+	@Test
+	public void testPrint(){
+		ChessGame cg = new ChessGame();
+		cg.displayChessBoard();
+	}
 }
