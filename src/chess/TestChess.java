@@ -10,7 +10,7 @@ public class TestChess {
 	@Test
 	public void testCanMoveTo(){
 		Piece piece=new Piece("P", 'A', 2);
-		boolean canMoveTo = piece.canMoveTo('A',3,false);
+		boolean canMoveTo = piece.canMoveTo('E',4,false);
 		assertEquals(true,canMoveTo);
 	}
 	
