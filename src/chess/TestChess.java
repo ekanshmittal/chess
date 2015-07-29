@@ -16,16 +16,13 @@ public class TestChess {
 	
 	@Test
 	public void testMove(){
-		Player white = new Player(true);
-		Player black = new Player(false);
-		white.apply("eb5");
-		white.printPositions();
-		black.printPositions();
         ChessGame cg = new ChessGame();
         try {
-            cg.readFile("C:\\faltUi\\untitled\\src\\chess\\Adams.pgn");
+            cg.readFile(System.getProperty("user.dir")+"\\Adams.pgn");
         } catch (IOException e) {
             e.printStackTrace();
         }
+        cg.white_player.printPositions();
+        cg.black_player.printPositions();
 	}
 }
