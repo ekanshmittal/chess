@@ -1,12 +1,13 @@
 package chess;
+import chess.Piece;
 
 import java.util.ArrayList;
 
 public class Player {
 	ArrayList <Piece> pieces;
-	boolean isWhite;
-	Player(boolean isWhite) {
-		this.isWhite = isWhite;
+    boolean isWhite;
+	public Player(boolean isWhite) {
+        this.isWhite = isWhite;
 		pieces = new ArrayList<Piece> ();
 		int offset = 1;
 		if(isWhite)
@@ -42,11 +43,6 @@ public class Player {
 		}
 	}
 	
-	void capture(String move) {
-		
-		
-	}
-	
 	void printPositions () {
 		for (Piece p: this.pieces) {
 			if(!p.isCaptured())
@@ -54,7 +50,30 @@ public class Player {
 		}
 	}
 
-    public void updatePiecePositions(String player_move, boolean captured) {
+
+    public void updatePiecePositions(String player_move) {
+        String[] indv_moves = player_move.trim().split(" ");
+        if (isWhite){
+            //update if any captured
+            if (indv_moves[1].contains("x"))
+                capture(indv_moves[1].split("x")[1]);
+
+            //update for the own move
+            apply(indv_moves[0]);
+        }
+        else {
+            //update if any captured
+            if (indv_moves[0].contains("x"))
+                capture(indv_moves[0].split("x")[1]);
+
+            //update for the own move
+            apply(indv_moves[1]);
+        }
     }
-    
+
+    private void capture(String position) {
+        
+    }
+
+
 }
