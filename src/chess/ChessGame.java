@@ -67,7 +67,7 @@ public class ChessGame {
 			}
 			for (int j = 0; j < 8; j++) {
 				if (j == 0) {
-					System.out.print(i + 1 + " ");
+					System.out.print(8-i + " ");
 				}
 				if (board[i][j].pieceName != null) {
 					System.out.print(board[i][j].pieceName + " ");
