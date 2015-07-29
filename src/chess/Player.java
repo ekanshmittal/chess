@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Player {
 	ArrayList <Piece> pieces;
     boolean isWhite;
+    boolean won;
+
 	public Player(boolean isWhite) {
         this.isWhite = isWhite;
 		pieces = new ArrayList<Piece> ();
@@ -58,17 +60,35 @@ public class Player {
 
     public void apply(String move) {
 		Character first = move.charAt(0);
-		if(move.charAt(move.length()-1) == '+')
-			move = move.substring(0, move.length()-1);
+
 		String pieceName = "";
 		if(Character.isUpperCase(first))
 			pieceName = first.toString();
-		else
-			pieceName = "P";
+		else {
+            pieceName = "P";
+            move = "P" + move;
+        }
+
 		if(pieceName.equals("O")) {
 			castle(move);
 			return;
 		}
+
+        //handling check moves
+        if (move.contains("+"))
+            move = move.substring(0, move.length() - 1);
+
+        //handling check-mate moves
+        if (move.contains("#")){
+            won = true;
+        }
+
+        //handling promotion moves
+        if (move.contains("=")){
+            promote(move);
+            return;
+        }
+        
 		String position = move.substring(move.length()-2);
 		Character x = position.charAt(0);
 		Integer y = Integer.parseInt(position.substring(1));
@@ -87,8 +107,32 @@ public class Player {
 			}
 		}
 	}
-	
-	void printPositions () {
+
+    private void promote(String move) {
+        String[] promote_pieces = move.split("=");
+        String oldPiece = promote_pieces[0].charAt(0) + "";
+        char xCoord = promote_pieces[0].charAt(1);
+        int yCoord = Integer.parseInt(promote_pieces[0].charAt(1) + "");
+        String newPiece = promote_pieces[1].charAt(1) + "";
+
+        boolean capture = false;
+        if (move.contains("x"))
+            capture = true;
+
+        if (move.contains("#"))
+            won = true;
+
+        for(Piece p: this.pieces) {
+            if(p.getName().equals(oldPiece) && !p.isCaptured() && p.canMoveTo(xCoord, yCoord, capture)) {
+                p.setName(newPiece);
+                p.setX(xCoord);
+                p.setY(yCoord);
+                break;
+            }
+        }
+    }
+
+    void printPositions () {
 		for (Piece p: this.pieces) {
 			if(!p.isCaptured())
 				System.out.println(p);
