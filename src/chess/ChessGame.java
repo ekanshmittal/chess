@@ -6,6 +6,7 @@ public class ChessGame {
 	public static void main(String[] args){
 		Player white = new Player(true);
 		Player black = new Player(false);
+		white.apply("eb5");
 		white.printPositions();
 		black.printPositions();
 	}

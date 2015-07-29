@@ -7,25 +7,25 @@ public class Piece {
 	private String name;
 	private Character x;
 	private Integer y;
-	private boolean deleted;
+	private boolean captured;
 
 	public Piece(String name, Character x, Integer y) {
 		this.name = name;
 		this.x = x;
 		this.y = y;
-		deleted = false;
+		captured = false;
 	}
 	
 	public boolean canMoveTo(Character x, Integer y) {
 		return true;
 	}
 	
-	public boolean isDeleted() {
-		return this.deleted;
+	public boolean isCaptured() {
+		return this.captured;
 	}
 	
-	public void delete() {
-		this.deleted = true;
+	public void capture() {
+		this.captured = true;
 	}
 
 	public char getX() {
