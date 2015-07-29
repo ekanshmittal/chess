@@ -1,7 +1,5 @@
 package chess.src.chess;
 
-import PayPal_java.Chess;
-
 import java.io.*;
 
 public class ChessGame {
@@ -18,7 +16,6 @@ public class ChessGame {
     public void readFile(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(new File(fileName)));
         String newMove;
-        boolean white_captured = false, black_captured = false;
         do {
             newMove = br.readLine();
             if (newMove != null) {
