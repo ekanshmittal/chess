@@ -1,5 +1,4 @@
-package chess;
-import chess.Piece;
+package chess.src.chess;
 
 import java.util.ArrayList;
 
@@ -34,8 +33,14 @@ public class Player {
 		String position = move.substring(move.length()-2);
 		Character x = position.charAt(0);
 		Integer y = Integer.parseInt(position.substring(1));
+
+        //check if move contains a capture
+        boolean capture = false;
+        if (move.contains("x"))
+            capture = true;
+
 		for(Piece p: this.pieces) {
-			if(p.getName().equals(pieceName) && !p.isCaptured() && p.canMoveTo(x, y)) {
+			if(p.getName().equals(pieceName) && !p.isCaptured() && p.canMoveTo(x, y, capture)) {
 				p.setX(x);
 				p.setY(y);
 				break;

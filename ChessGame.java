@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 
 import java.io.*;
 import java.util.Arrays;
@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class ChessGame {
 
 	
-    Player white_player;
+    chess.Player white_player;
     Player black_player;
     boolean isWhite = true;
 

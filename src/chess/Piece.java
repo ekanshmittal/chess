@@ -1,4 +1,4 @@
-package chess;
+package chess.src.chess;
 
 /**
  * Created by test on 7/29/2015.
@@ -63,21 +63,6 @@ public class Piece {
 	public String getName() {
 		return name;
 	}
-
-    public boolean canMoveTo(char x, int y){
-        /*switch(name){
-            case "R":
-                break;
-            case "K":
-                break;
-            case "B":
-                break;
-            case ""
-        }*/
-        if (name.equals("R")){}
-        if (name.equals("K")){}
-        return true;
-    }
 
 	@Override
 	public String toString() {
