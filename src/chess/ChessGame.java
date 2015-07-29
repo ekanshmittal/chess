@@ -36,6 +36,11 @@ public class ChessGame {
         }while (newMove != null);
         br.close();
     }
+    
+    public void applyMove(String move) {
+    	this.white_player.updatePiecePositions(move);
+    	this.black_player.updatePiecePositions(move);
+    }
 
 }
 

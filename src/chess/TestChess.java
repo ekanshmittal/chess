@@ -9,9 +9,9 @@ import org.junit.Test;
 public class TestChess {
 	@Test
 	public void testCanMoveTo(){
-		Piece piece=new Piece("P", 'A', 2);
-		boolean canMoveTo = piece.canMoveTo('A',3,false);
-		assertEquals(true,canMoveTo);
+		Piece piece=new Piece("P", 'A', 2);;
+		assertEquals(true, piece.canMoveTo('a',3,false));
+		assertEquals(false, piece.canMoveTo('e', 4, false));
 	}
 	
 	@Test
@@ -22,7 +22,15 @@ public class TestChess {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        cg.white_player.printPositions();
-        cg.black_player.printPositions();
+       
+	}
+	
+	@Test
+	public void testMov(){
+		ChessGame cg = new ChessGame();
+		cg.applyMove("e4 e5");
+		cg.applyMove("Nf3 Nc6");
+		 cg.white_player.printPositions();
+	        cg.black_player.printPositions();
 	}
 }
