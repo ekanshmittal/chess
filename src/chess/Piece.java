@@ -7,23 +7,15 @@ public class Piece {
 	private String name;
 	private Character x;
 	private Integer y;
-	private boolean captured;
+	boolean isWhite;
 
-	public Piece(String name, Character x, Integer y) {
+	public Piece(String name, Character x, Integer y, boolean isWhite) {
 		this.name = name;
 		this.x = x;
 		this.y = y;
-		captured = false;
+		this.isWhite = isWhite;
 	}
 	
-	public boolean isCaptured() {
-		return this.captured;
-	}
-
-	public void capture() {
-		this.captured = true;
-	}
-
 	public char getX() {
 		return x;
 	}
@@ -50,10 +42,16 @@ public class Piece {
 	
 	public boolean canMoveTo(Character x, Integer y, boolean isCaptureMove) {
 		if (ChessConstants.PAWN.equals(name)) {
+			if((isWhite && (y <= this.y))||(!isWhite && (y >= this.y))) {
+				return false;
+			}
 			if ((Math.abs(x - this.x) == 1 && isCaptureMove) || this.x == x) {
 				if (this.y == 2 || this.y == 7) {
+					if(isCaptureMove)
+						return Math.abs(this.y - y) <= 1;
 					return Math.abs(this.y - y) <= 2;
 				} else {
+					
 					return Math.abs(this.y - y) == 1;
 				}
 			} else {

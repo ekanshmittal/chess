@@ -1,4 +1,4 @@
-package chess;
+package chess.src.chess;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 public class PlayerTest {
 
     Player p;
+
     @Before
     public void setUp() throws Exception {
         p = new Player(true);
@@ -25,8 +26,6 @@ public class PlayerTest {
 
     @Test
     public void testSolveAmbiguity() throws Exception {
-
         assertEquals(true, p.solveAmbiguity("Nb1e2"));
-
     }
 }

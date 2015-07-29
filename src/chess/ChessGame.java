@@ -12,6 +12,8 @@ public class ChessGame {
 	public ChessGame() {
 		white_player = new Player(isWhite);
 		black_player = new Player(!isWhite);
+		white_player.addOtherPlayerPieces(black_player.pieces);
+		black_player.addOtherPlayerPieces(white_player.pieces);
 	}
 
 	public void readFile(String fileName) throws IOException {
@@ -57,20 +59,18 @@ public class ChessGame {
 			}
 		}
 		for (Piece piece : white_player.pieces) {
-			if (!piece.isCaptured()) {
-				if(board[8 - (piece.getY())][piece.getX() - 'a'].pieceName != null)
-					System.out.println("ERROR MORE THAN 1 PIECE");
-				board[8 - (piece.getY())][piece.getX() - 'a'].pieceName = "W_"
-						+ piece.getName();
-			}
+			if(board[8 - (piece.getY())][piece.getX() - 'a'].pieceName != null)
+				System.out.println("ERROR MORE THAN 1 PIECE");
+			board[8 - (piece.getY())][piece.getX() - 'a'].pieceName = "W_"
+					+ piece.getName();
 		}
 		for (Piece piece : black_player.pieces) {
-			if (!piece.isCaptured()) {
-				if(board[8 - (piece.getY())][piece.getX() - 'a'].pieceName != null)
-					System.out.println("ERROR MORE THAN 1 PIECE");
-				board[8 - (piece.getY())][piece.getX() - 'a'].pieceName = "B_"
-						+ piece.getName();
-			}
+			
+			if(board[8 - (piece.getY())][piece.getX() - 'a'].pieceName != null)
+				System.out.println("ERROR MORE THAN 1 PIECE");
+			board[8 - (piece.getY())][piece.getX() - 'a'].pieceName = "B_"
+					+ piece.getName();
+			
 		}
 		for (int i = 0; i < 8; i++) {
 			if (i == 0) {
