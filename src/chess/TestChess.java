@@ -1,5 +1,4 @@
-package chess.src.chess;
-
+package chess;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
@@ -16,12 +15,12 @@ public class TestChess {
 	
 	@Test
 	public void testMove(){
-        ChessGame cg = new ChessGame();
-        try {
-            cg.readFile(System.getProperty("user.dir")+"\\Adams.pgn");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        ChessGame cg = new ChessGame();
+//        try {
+//            cg.readFile(System.getProperty("user.dir")+"\\Adams.pgn");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
        
 	}
 	
@@ -31,7 +30,15 @@ public class TestChess {
 		cg.applyMove("e4 e5");
 		cg.applyMove("Nf3 Nc6");
 		cg.applyMove("Bb5 a6");
+		cg.applyMove("Ba4 Nf6");
+		cg.applyMove("O-O Be7");
+		
 		cg.white_player.printPositions();
 	    cg.black_player.printPositions();
+	}
+	@Test
+	public void testPrint(){
+		ChessGame cg = new ChessGame();
+		cg.displayChessBoard();
 	}
 }
