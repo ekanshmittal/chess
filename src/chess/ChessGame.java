@@ -2,7 +2,6 @@ package chess;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class ChessGame {
 
@@ -13,7 +12,6 @@ public class ChessGame {
 	public ChessGame() {
 		white_player = new Player(isWhite);
 		black_player = new Player(!isWhite);
-
 	}
 
 	public void readFile(String fileName) throws IOException {

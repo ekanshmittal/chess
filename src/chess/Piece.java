@@ -17,7 +17,7 @@ public class Piece {
 	}
 
 	public boolean canMoveTo(Character x, Integer y, boolean isCaptureMove) {
-		if ("P".equals(name)) {
+		if (ChessConstants.PAWN.equals(name)) {
 			if ((Math.abs(x - this.x) == 1 && isCaptureMove) || this.x == x) {
 				if (this.y == 2 || this.y == 7) {
 					return Math.abs(this.y - y) <= 2;
@@ -27,12 +27,12 @@ public class Piece {
 			} else {
 				return false;
 			}
-		} else if ("R".equals(name)) {
+		} else if (ChessConstants.ROOK.equals(name)) {
 			return this.x == x || this.y == y;
-		} else if ("N".equals(name)) {
+		} else if (ChessConstants.KNIGHT.equals(name)) {
 			return (Math.abs(this.x - x) == 2 && Math.abs(this.y - y) == 1)
 					|| (Math.abs(this.y - y) == 2 && Math.abs(this.x - x) == 1);
-		} else if ("B".equals(name)) {
+		} else if (ChessConstants.BISHOP.equals(name)) {
 			return Math.abs(this.x - x) == Math.abs(this.y - y);
 		}
 		return true;
