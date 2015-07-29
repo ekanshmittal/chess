@@ -9,23 +9,29 @@ import org.junit.Test;
 public class TestChess {
 	@Test
 	public void testCanMoveTo(){
-		Piece piece=new Piece("P", 'A', 2);
-		boolean canMoveTo = piece.canMoveTo('A',3,false);
-		assertEquals(true,canMoveTo);
+		Piece piece=new Piece("P", 'a', 2);
+		assertEquals(true, piece.canMoveTo('a',3,false));
+		assertEquals(false, piece.canMoveTo('e', 4, false));
 	}
 	
 	@Test
 	public void testMove(){
-		Player white = new Player(true);
-		Player black = new Player(false);
-		white.apply("eb5");
-		white.printPositions();
-		black.printPositions();
         ChessGame cg = new ChessGame();
         try {
-            cg.readFile("C:\\faltUi\\untitled\\src\\chess\\Adams.pgn");
+            cg.readFile(System.getProperty("user.dir")+"\\Adams.pgn");
         } catch (IOException e) {
             e.printStackTrace();
         }
+       
+	}
+	
+	@Test
+	public void testMov(){
+		ChessGame cg = new ChessGame();
+		cg.applyMove("e4 e5");
+		cg.applyMove("Nf3 Nc6");
+		cg.applyMove("Bb5 a6");
+		cg.white_player.printPositions();
+	    cg.black_player.printPositions();
 	}
 }

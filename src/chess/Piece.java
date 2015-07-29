@@ -24,6 +24,8 @@ public class Piece {
 				} else {
 					return Math.abs(this.y - y) == 1;
 				}
+			} else {
+				return false;
 			}
 		} else if ("R".equals(name)) {
 			return this.x == x || this.y == y;

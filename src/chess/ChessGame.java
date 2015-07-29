@@ -35,26 +35,12 @@ public class ChessGame {
 
         }while (newMove != null);
         br.close();
-        white_player.printPositions();
-        black_player.printPositions();
-
     }
-
-    public static void main(String[] args){
-    	Player white = new Player(true);
-		Player black = new Player(false);
-		white.apply("eb5");
-		white.printPositions();
-		black.printPositions();
-        ChessGame cg = new ChessGame();
-        try {
-            cg.readFile(System.getProperty("user.dir")+"\\Adams.pgn");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    
+    public void applyMove(String move) {
+    	this.white_player.updatePiecePositions(move);
+    	this.black_player.updatePiecePositions(move);
     }
 
 }
-
-
 

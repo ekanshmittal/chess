@@ -93,6 +93,7 @@ public class Player {
 			if(!p.isCaptured())
 				System.out.println(p);
 		}
+		System.out.println();
 	}
 
 
