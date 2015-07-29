@@ -70,10 +70,5 @@ public class ChessGame {
     private class BoardSquare{
     	String pieceName;
     }
-    public static void main(String[] args){
-    	ChessGame cg = new ChessGame();
-		//cg.applyMove("e4 e5");
-		cg.displayChessBoard();
-    }
 }
 
