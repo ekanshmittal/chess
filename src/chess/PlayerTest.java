@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,6 +25,8 @@ public class PlayerTest {
 
     @Test
     public void testSolveAmbiguity() throws Exception {
-        assertEquals(true, p.solveAmbiguity("N9e2"));
+//        assertEquals(true, p.solveAmbiguity("N9e2"));
+//        assertEquals(true, p.solveAmbiguity("N9e2"));
+//        assertEquals(true, p.solveAmbiguity("N9e2"));
     }
 }
