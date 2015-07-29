@@ -6,9 +6,9 @@ public class ChessGame {
     Player white_player;
     Player black_player;
 
-    public ChessGame(){
-        white_player = new Player();
-        black_player = new Player();
+    public ChessGame(Player white_player,Player black_player){
+        this.white_player = white_player;
+        this.black_player = black_player;
     }
 
     public void readFile(String fileName) throws IOException {
