@@ -25,12 +25,8 @@ public class PlayerTest {
 
     @Test
     public void testSolveAmbiguity() throws Exception {
-<<<<<<< HEAD
+
         assertEquals(true, p.solveAmbiguity("Nb1e2"));
-=======
-//        assertEquals(true, p.solveAmbiguity("N9e2"));
-//        assertEquals(true, p.solveAmbiguity("N9e2"));
-//        assertEquals(true, p.solveAmbiguity("N9e2"));
->>>>>>> 05be2ce2b11a1142d351ac17c2b903118bcd066c
+
     }
 }
