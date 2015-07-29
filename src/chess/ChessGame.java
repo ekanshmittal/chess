@@ -1,4 +1,4 @@
-package chess;
+package chess.src.chess;
 
 import java.io.*;
 import java.util.Arrays;
