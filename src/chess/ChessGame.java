@@ -1,4 +1,4 @@
-package chess;
+package chess.src.chess;
 
 import java.io.*;
 import java.util.Arrays;
@@ -56,8 +56,5 @@ public class ChessGame {
 
 }
 
-   /* if(player_moves[0].contains("x"))
-                black_captured = true;
-            if (player_moves[1].contains("x"))
-                white_captured = true;*/
+
 
