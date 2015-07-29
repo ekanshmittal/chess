@@ -4,14 +4,14 @@ package chess;
  * Created by test on 7/29/2015.
  */
 public class Piece {
+	private String name;
 	private Character x;
 	private Integer y;
-	private String name;
 
-	public Piece(Character x, Integer y, String name) {
+	public Piece(String name, Character x, Integer y) {
+		this.name = name;
 		this.x = x;
 		this.y = y;
-		this.name = name;
 	}
 
 	public char getX() {
@@ -33,6 +33,7 @@ public class Piece {
 	public String getName() {
 		return name;
 	}
+
 	@Override
 	public String toString() {
 		return name + " " + x + y;
