@@ -7,25 +7,40 @@ public class Piece {
 	private String name;
 	private Character x;
 	private Integer y;
-	private boolean deleted;
+	private boolean captured;
 
 	public Piece(String name, Character x, Integer y) {
 		this.name = name;
 		this.x = x;
 		this.y = y;
-		deleted = false;
+		captured = false;
 	}
-	
+
 	public boolean canMoveTo(Character x, Integer y) {
+		if ("P".equals(name)) {
+			if (Math.abs(x - this.x) <= 1) {
+				if (this.y == 2 || this.y == 7) {
+					return Math.abs(this.y - y) <= 2;
+				} else {
+					return Math.abs(this.y - y) == 1;
+				}
+			}
+		} else if ("R".equals(name)) {
+		} else if ("N".equals(name)) {
+		} else if ("B".equals(name)) {
+		} else if ("K".equals(name)) {
+		} else if ("Q".equals(name)) {
+		}
+
 		return true;
 	}
-	
+
 	public boolean isCaptured() {
-		return this.deleted;
+		return this.captured;
 	}
-	
-	public void delete() {
-		this.deleted = true;
+
+	public void capture() {
+		this.captured = true;
 	}
 
 	public char getX() {

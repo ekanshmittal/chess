@@ -1,9 +1,11 @@
-package chess.src.chess;
+package chess;
 
 import java.io.*;
 import java.util.Arrays;
 
 public class ChessGame {
+
+	
     Player white_player;
     Player black_player;
     boolean isWhite = true;
@@ -39,6 +41,11 @@ public class ChessGame {
 
 
     public static void main(String[] args){
+    	Player white = new Player(true);
+		Player black = new Player(false);
+		white.apply("eb5");
+		white.printPositions();
+		black.printPositions();
         ChessGame cg = new ChessGame();
         try {
             cg.readFile("C:\\faltUi\\untitled\\src\\chess\\Adams.pgn");
