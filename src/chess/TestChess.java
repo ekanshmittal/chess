@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
@@ -15,13 +15,12 @@ public class TestChess {
 	
 	@Test
 	public void testMove(){
-//        ChessGame cg = new ChessGame();
-//        try {
-//            cg.readFile(System.getProperty("user.dir")+"\\Adams.pgn");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-       
+        ChessGame cg = new ChessGame();
+        try {
+            cg.readFile(System.getProperty("user.dir")+"\\Adams.pgn");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	@Test
