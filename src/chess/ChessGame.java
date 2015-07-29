@@ -1,6 +1,7 @@
 package chess.src.chess;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class ChessGame {
     Player white_player;
@@ -19,19 +20,21 @@ public class ChessGame {
         do {
             newMove = br.readLine();
             if (newMove != null) {
-                newMove = newMove.replaceAll("[0-9]+\\.|\\n", "//");
-
-                String player_moves[] = newMove.split("//");
+                newMove = newMove.replaceAll("[0-9]+\\.|\\n", "*");
+                String init_player_moves[] = newMove.split("\\*");
+                String[] player_moves = Arrays.copyOfRange(init_player_moves, 1, init_player_moves.length);
                 for (String move : player_moves) {
                     if (move != null) {
-                        System.out.println(move);
+//                        System.out.println(move);
                         white_player.updatePiecePositions(move);
-                        white_player.updatePiecePositions(move);
+                        black_player.updatePiecePositions(move);
                     }
                 }
             }
 
         }while (newMove != null);
+        br.close();
+
     }
 
 

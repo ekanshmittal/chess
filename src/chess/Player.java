@@ -40,8 +40,7 @@ public class Player {
     public void updatePiecePositions(String player_move) {
         String[] indv_moves = player_move.trim().split(" ");
         if (isWhite){
-            //update if any captured
-            if (indv_moves[1].contains("x"))
+            if (indv_moves.length > 1 && indv_moves[1].contains("x"))
                 capture(indv_moves[1].split("x")[1]);
 
             //update for the own move
@@ -53,13 +52,23 @@ public class Player {
                 capture(indv_moves[0].split("x")[1]);
 
             //update for the own move
-            apply(indv_moves[1]);
+            if (indv_moves.length > 1)
+                apply(indv_moves[1]);
         }
     }
 
     private void capture(String position) {
-        
+        Character xCoord = position.charAt(0);
+        Integer yCoord = Integer.parseInt(position.charAt(1) + "");
+        //check which Piece is in that position
+        for (Piece piece:pieces){
+            if (piece.getX() == xCoord && piece.getY() == yCoord){
+                piece.delete();
+            }
+        }
     }
+
+
 
 
 }
