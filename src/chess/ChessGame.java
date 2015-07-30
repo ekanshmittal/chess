@@ -23,6 +23,7 @@ public class ChessGame {
 		int count = 1;
 		do {
 			newMove = br.readLine();
+            //System.out.println(newMove);
 			if (newMove != null) {
 				newMove = newMove.replaceAll("[0-9]+\\.|\\n", "*");
 				String init_player_moves[] = newMove.split("\\*");
@@ -31,10 +32,10 @@ public class ChessGame {
 				
 				for (String move : player_moves) {
 					if (move != null) {
-						white_player.updatePiecePositions(move);
-						black_player.doCapture(move);
-						black_player.updatePiecePositions(move);
-						white_player.doCapture(move);
+						white_player.updateAfterMove(move);
+						black_player.updateIfCaptured(move);
+						black_player.updateAfterMove(move);
+						white_player.updateIfCaptured(move);
 					}
 					System.out.println(count);
 					displayChessBoard();
@@ -44,11 +45,6 @@ public class ChessGame {
 
 		} while (newMove != null);
 		br.close();
-	}
-
-	public void applyMove(String move) {
-		this.white_player.updatePiecePositions(move);
-		this.black_player.updatePiecePositions(move);
 	}
 
 	public void displayChessBoard() {

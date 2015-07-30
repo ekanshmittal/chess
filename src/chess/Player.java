@@ -36,21 +36,21 @@ public class Player {
 	private void castle (String move) {
 		if ("O-O".equals(move.toUpperCase())){
 			
-            Piece rook = findPiece(ChessConstants.ROOK, 'h', -1);
+            Piece rook = findPiece(ChessConstants.ROOK, 'h', ChessConstants.RANK_DEFAULT);
             if (rook != null){
                 rook.setX('f');
             }
-            Piece king = findPiece(ChessConstants.KING, 'e', -1);
+            Piece king = findPiece(ChessConstants.KING, 'e', ChessConstants.RANK_DEFAULT);
             if (king != null){
                 king.setX('g');
             }
         }
         else {
-            Piece rook = findPiece(ChessConstants.ROOK, 'a', -1);
+            Piece rook = findPiece(ChessConstants.ROOK, 'a', ChessConstants.RANK_DEFAULT);
             if (rook != null){
                 rook.setX('d');
             }
-            Piece king = findPiece(ChessConstants.KING, 'e', -1);
+            Piece king = findPiece(ChessConstants.KING, 'e', ChessConstants.RANK_DEFAULT);
             if (king != null){
                 king.setX('c');
             }
@@ -60,7 +60,7 @@ public class Player {
 
     private Piece findPiece(String pieceName, char xCoord, int yCoord) {
         for (Piece piece:this.pieces){
-            if (piece.getName().equals(pieceName) && (piece.getX() == xCoord || xCoord == 'm') && (piece.getY() == yCoord || yCoord == -1)){
+            if (piece.getName().equals(pieceName) && (piece.getX() == xCoord || xCoord == ChessConstants.FILE_DEFAULT) && (piece.getY() == yCoord || yCoord == ChessConstants.RANK_DEFAULT)){
                 return piece;
             }
         }
@@ -70,7 +70,7 @@ public class Player {
     private List<Piece> findAllPieces(String pieceName, char xCoord, int yCoord) {
     	ArrayList<Piece> pieces = new ArrayList<Piece>();
         for (Piece piece:this.pieces){
-            if (piece.getName().equals(pieceName) && (piece.getX() == xCoord || xCoord == 'm') && (piece.getY() == yCoord || yCoord == -1)){
+            if (piece.getName().equals(pieceName) && (piece.getX() == xCoord || xCoord == ChessConstants.FILE_DEFAULT) && (piece.getY() == yCoord || yCoord == ChessConstants.RANK_DEFAULT)){
                 pieces.add(piece);
             }
         }
@@ -79,90 +79,80 @@ public class Player {
     
 
     public void apply(String move) {
-		Character first = move.charAt(0);
-
-		String pieceName = "";
-		if(Character.isUpperCase(first))
-			pieceName = first.toString();
-		else {
-            pieceName = ChessConstants.PAWN;
+		if(!Character.isUpperCase(move.charAt(0)))
             move = ChessConstants.PAWN + move;
-        }
 
-        //handling check moves
-        if (move.contains("+"))
+        if (move.contains(ChessConstants.CHECK))
             move = move.substring(0, move.length() - 1);
 
-        //handling check-mate moves
-        if (move.contains("#")){
+        if (move.contains(ChessConstants.CHECKMATE)){
             move = move.substring(0, move.length() - 1);
             won = true;
         }
         
-        if(pieceName.equals("O")) {
+        if(move.charAt(0) == ChessConstants.CASTLE) {
 			castle(move);
 			return;
 		}
 
-        //handling promotion moves
-        if (move.contains("=")){
-            promote(move);
-            return;
+        String toSetPieceName = null;
+        if (move.contains(ChessConstants.PROMOTE)){
+            toSetPieceName = move.substring(move.length() - 1);
+            move = move.substring(0,move.length() - 2);
         }
-        
+                
         if(solveAmbiguity(move)){
             return;
         }
 
-       
-        
-		String position = move.substring(move.length()-2);
-		Character x = position.charAt(0);
-		Integer y = Integer.parseInt(position.substring(1));
-
-        //check if move contains a capture
-        boolean capture = false;
-        if (move.contains("x"))
-            capture = true;
-
         boolean done = false;
-        
-		for(Piece p: this.pieces) {
-			if(p.getName().equals(pieceName) && p.canMoveTo(x, y, capture)) {
-				if(pieceName.equals("R"))  {
-            		if(canThisRookMove(p, x, y, capture)==false)
-            			continue;
-            	}
-				p.setX(x);
-				p.setY(y);
-				done = true;
-				break;
-			}
-		}
+        Piece piece = updatePiecePosition(this.pieces, move);
+        if (piece != null){
+            if (toSetPieceName != null)
+                piece.setName(toSetPieceName);
+            done = true;
+        }
+
 		if(!done)
 			System.out.println("ERROR!!" + move);
 	}
 
+    public Piece updatePiecePosition(List<Piece> pieces, String move){
+        String pieceName = move.charAt(0)+"";
+        String position = move.substring(move.length()-2);
+        Character toX = position.charAt(0);
+        Integer toY = Integer.parseInt(position.substring(1));
+
+        //check if move contains a capture
+        boolean capture = false;
+        if (move.contains(ChessConstants.CAPTURED))
+            capture = true;
+        for(Piece p: pieces) {
+            if(p.getName().equals(pieceName) && p.canMoveTo(toX, toY, capture)) {
+                if(pieceName.equals(ChessConstants.ROOK) && !canThisRookMove(p, toX, toY))
+                    continue;
+
+                p.setX(toX);
+                p.setY(toY);
+
+                return p;
+            }
+        }
+
+        return null;
+    }
+
     public boolean solveAmbiguity(String move){
 
-        String xRemoved = "";
-        char toX;
-        int toY;
-        boolean capture = false;
-        String pieceName;
-        if (move.contains("x")) {
-        	capture = true;
-            xRemoved = move.substring(0, move.indexOf("x")) + move.substring(move.indexOf("x") + 1);
-        }
+        String xRemoved;
+        if (move.contains(ChessConstants.CAPTURED))
+            xRemoved = move.substring(0, move.indexOf(ChessConstants.CAPTURED)) + move.substring(move.indexOf(ChessConstants.CAPTURED) + 1);
         else
             xRemoved = move;
 
-        toY = Integer.parseInt(xRemoved.charAt(xRemoved.length() - 1) + "");
-        toX = xRemoved.charAt(xRemoved.length() - 2);
-        pieceName = xRemoved.charAt(0) + "";
 
-        char file = 'm';
-        int rank = -1;
+        char file = ChessConstants.FILE_DEFAULT;
+        int rank = ChessConstants.RANK_DEFAULT;
         xRemoved = xRemoved.substring(1,xRemoved.length() - 2);
         if (xRemoved.matches(".*[a-z]+.*")) {
             file = xRemoved.charAt(0);
@@ -171,59 +161,16 @@ public class Player {
 
         if (xRemoved.matches(".*[0-9]+")) {
             rank = Integer.parseInt(xRemoved.charAt(0) + "");
-            xRemoved = xRemoved.substring(1,xRemoved.length());
         }
 
-        if (file == 'm' && rank == -1 )
+        if (file == ChessConstants.FILE_DEFAULT && rank == ChessConstants.RANK_DEFAULT )
             return false;
-        
-        for(Piece p: findAllPieces(pieceName, file, rank)) {
-        	if(p.getName().equals(pieceName) && p.canMoveTo(toX, toY, capture)) {
-				if(pieceName.equals("R"))  {
-            		if(canThisRookMove(p, toX, toY, capture)==false)
-            			continue;
-            	}
-				p.setX(toX);
-				p.setY(toY);
-				break;
-			}
-        }
+
+        updatePiecePosition(findAllPieces(move.charAt(0) + "", file, rank), move);
         return true;
     }
 
-    private void promote(String move) {
-        String[] promote_pieces = move.split("=");
-        String oldPiece = promote_pieces[0].charAt(0) + "";
-        char xCoord = promote_pieces[0].charAt(1);
-        int yCoord = Integer.parseInt(promote_pieces[0].charAt(2) + "");
-        String newPiece = promote_pieces[1].charAt(0) + "";
-
-        boolean capture = false;
-        if (move.contains("x"))
-            capture = true;
-
-        if (move.contains("#"))
-            won = true;
-
-        for(Piece p: this.pieces) {
-            if(p.getName().equals(oldPiece) && p.canMoveTo(xCoord, yCoord, capture)) {
-                p.setName(newPiece);
-                p.setX(xCoord);
-                p.setY(yCoord);
-                break;
-            }
-        }
-    }
-
-    void printPositions () {
-		for (Piece p: this.pieces) {
-			System.out.println(p);
-		}
-		System.out.println();
-	}
-
-
-    public void updatePiecePositions(String player_move) {
+    public void updateAfterMove(String player_move) {
         String[] indv_moves = player_move.trim().split(" ");
         if (isWhite){
             apply(indv_moves[0]);
@@ -234,19 +181,17 @@ public class Player {
         }
     }
     
-    public void doCapture(String player_move) {
+    public void updateIfCaptured(String player_move) {
     	String[] indv_moves = player_move.trim().split(" ");
-    	
-    	
+
     	if (isWhite){
-    		if (indv_moves.length > 1 && indv_moves[1].contains("x"))
-                capture(indv_moves[1].split("x")[1]);
+    		if (indv_moves.length > 1 && indv_moves[1].contains(ChessConstants.CAPTURED))
+                capture(indv_moves[1].split(ChessConstants.CAPTURED)[1]);
         }
         else {
-        	if (indv_moves.length > 1 && indv_moves[0].contains("x"))
-                capture(indv_moves[0].split("x")[1]);
+        	if (indv_moves.length > 1 && indv_moves[0].contains(ChessConstants.CAPTURED))
+                capture(indv_moves[0].split(ChessConstants.CAPTURED)[1]);
         }
-        //update for the own move
     }
     
     private int distance(char x1, int y1, char x2, int y2) {
@@ -257,7 +202,7 @@ public class Player {
     	return distance(p1.getX(), p1.getY(), p2.getX(), p2.getY());
     }
     
-    private boolean canThisRookMove(Piece p, Character x, Integer y, boolean capture) {
+    private boolean canThisRookMove(Piece p, Character x, Integer y) {
     	int myDist = distance(p.getX(), p.getY(), x, y);
     	ArrayList <Piece> allPieces = new ArrayList<Piece>(this.pieces);
     	allPieces.addAll(this.otherPlayerPieces);
@@ -275,23 +220,21 @@ public class Player {
     private void capture(String position) {
         Character xCoord = position.charAt(0);
         Integer yCoord = Integer.parseInt(position.charAt(1) + "");
-        System.out.println("Capture called");
+
         //check which Piece is in that position
-        System.out.println(xCoord + " " + yCoord);
         for (Piece piece:pieces){
             if (piece.getX() == xCoord && piece.getY() == yCoord){
-            	System.out.println("Captured");
                 pieces.remove(piece);
                 return;
             }
         }
-        System.out.println("here");
+
+        //En passant capture
         int offset = 1;
         if(!this.isWhite)
         	offset = -1;
         for (Piece piece:pieces){
-            if (piece.getX() == xCoord && piece.getY() == yCoord+offset){
-            	System.out.println("Captured");
+            if (piece.getX() == xCoord && piece.getY() == yCoord + offset){
                 pieces.remove(piece);
                 return;
             }

@@ -17,11 +17,11 @@ public class TestChess {
 	public void testMove(){
         ChessGame cg = new ChessGame();
         try {
-            cg.readFile(System.getProperty("user.dir")+"\\src\\chess\\Adams.pgn");
+            cg.readFile(System.getProperty("user.dir")+"\\src\\chess\\complete.pgn");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //cg.displayChessBoard();
+        cg.displayChessBoard();
 	}
 	
 	@Test
