@@ -20,7 +20,6 @@ public class ChessGame {
 		BufferedReader br = new BufferedReader(new FileReader(
 				new File(fileName)));
 		String newMove;
-		int count = 1;
 		while((newMove = br.readLine()) != null) {
 			newMove = newMove.replaceAll("[0-9]+\\.|\\n", "*");
 			String init_player_moves[] = newMove.split("\\*");
@@ -34,9 +33,6 @@ public class ChessGame {
 					black_player.updateAfterMove(move);
 					white_player.updateIfCaptured(move);
 				}
-				System.out.println(count);
-				displayChessBoard();
-				count++;
 			}
 		}
 		br.close();

@@ -210,7 +210,6 @@ public class Player {
     		if(inbw.equals(p)|| (inbw.getX() == x && inbw.getY() == y))
     			continue;
     		if(distance(p, inbw) + distance(inbw.getX(), inbw.getY(), x, y) == myDist) {
-    			System.out.println(inbw);
     			return false;
     		}
     	}
