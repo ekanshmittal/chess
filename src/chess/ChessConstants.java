@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 
 public class ChessConstants {
 	public final static String PAWN = "P";
@@ -14,4 +14,6 @@ public class ChessConstants {
 	public final static Character CASTLE = 'O';
 	public final static Character FILE_DEFAULT = 'm';
 	public final static Integer RANK_DEFAULT = -1;
+	public final static Integer EnPassantWHITEOFFSET = 1;
+	public final static Integer EnPassantBLACKOFFSET = -1;
 }

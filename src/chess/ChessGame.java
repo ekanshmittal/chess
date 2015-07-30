@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 
 import java.io.*;
 import java.util.Arrays;
@@ -21,29 +21,24 @@ public class ChessGame {
 				new File(fileName)));
 		String newMove;
 		int count = 1;
-		do {
-			newMove = br.readLine();
-            //System.out.println(newMove);
-			if (newMove != null) {
-				newMove = newMove.replaceAll("[0-9]+\\.|\\n", "*");
-				String init_player_moves[] = newMove.split("\\*");
-				String[] player_moves = Arrays.copyOfRange(init_player_moves,
-						1, init_player_moves.length);
-				
-				for (String move : player_moves) {
-					if (move != null) {
-						white_player.updateAfterMove(move);
-						black_player.updateIfCaptured(move);
-						black_player.updateAfterMove(move);
-						white_player.updateIfCaptured(move);
-					}
-					System.out.println(count);
-					displayChessBoard();
-					count++;
-				}
-			}
+		while((newMove = br.readLine()) != null) {
+			newMove = newMove.replaceAll("[0-9]+\\.|\\n", "*");
+			String init_player_moves[] = newMove.split("\\*");
+			String[] player_moves = Arrays.copyOfRange(init_player_moves,
+					1, init_player_moves.length);
 
-		} while (newMove != null);
+			for (String move : player_moves) {
+				if (move != null) {
+					white_player.updateAfterMove(move);
+					black_player.updateIfCaptured(move);
+					black_player.updateAfterMove(move);
+					white_player.updateIfCaptured(move);
+				}
+				System.out.println(count);
+				displayChessBoard();
+				count++;
+			}
+		}
 		br.close();
 	}
 

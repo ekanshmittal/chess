@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 import static org.junit.Assert.*;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package chess.src.chess;
+package chess;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -221,7 +221,6 @@ public class Player {
         Character xCoord = position.charAt(0);
         Integer yCoord = Integer.parseInt(position.charAt(1) + "");
 
-        //check which Piece is in that position
         for (Piece piece:pieces){
             if (piece.getX() == xCoord && piece.getY() == yCoord){
                 pieces.remove(piece);
@@ -229,10 +228,9 @@ public class Player {
             }
         }
 
-        //En passant capture
-        int offset = 1;
+        int offset = ChessConstants.EnPassantWHITEOFFSET;
         if(!this.isWhite)
-        	offset = -1;
+        	offset = ChessConstants.EnPassantBLACKOFFSET;
         for (Piece piece:pieces){
             if (piece.getX() == xCoord && piece.getY() == yCoord + offset){
                 pieces.remove(piece);
